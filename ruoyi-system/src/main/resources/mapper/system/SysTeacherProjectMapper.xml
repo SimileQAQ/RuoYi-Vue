@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysTeacherProjectMapper">
+    
+    <resultMap type="SysTeacherProject" id="SysTeacherProjectResult">
+        <result property="id"    column="id"    />
+        <result property="comp"    column="comp"    />
+        <result property="projectId"    column="project_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="projectUser"    column="project_user"    />
+        <result property="userId"    column="user_id"    />
+        <result property="relevantDepartment"    column="relevant_department"    />
+    </resultMap>
+
+    <sql id="selectSysTeacherProjectVo">
+        select id, comp, project_id, project_name, project_user, user_id, relevant_department from sys_teacher_project
+    </sql>
+
+    <select id="selectSysTeacherProjectList" parameterType="SysTeacherProject" resultMap="SysTeacherProjectResult">
+        <include refid="selectSysTeacherProjectVo"/>
+        <where>  
+            <if test="comp != null  and comp != ''"> and comp = #{comp}</if>
+            <if test="projectId != null  and projectId != ''"> and project_id = #{projectId}</if>
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="projectUser != null  and projectUser != ''"> and project_user = #{projectUser}</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="relevantDepartment != null  and relevantDepartment != ''"> and relevant_department = #{relevantDepartment}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysTeacherProjectById" parameterType="Long" resultMap="SysTeacherProjectResult">
+        <include refid="selectSysTeacherProjectVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSysTeacherProject" parameterType="SysTeacherProject" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_teacher_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="comp != null">comp,</if>
+            <if test="projectId != null">project_id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="projectUser != null">project_user,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="relevantDepartment != null">relevant_department,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="comp != null">#{comp},</if>
+            <if test="projectId != null">#{projectId},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="projectUser != null">#{projectUser},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="relevantDepartment != null">#{relevantDepartment},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysTeacherProject" parameterType="SysTeacherProject">
+        update sys_teacher_project
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="comp != null">comp = #{comp},</if>
+            <if test="projectId != null">project_id = #{projectId},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="projectUser != null">project_user = #{projectUser},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="relevantDepartment != null">relevant_department = #{relevantDepartment},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysTeacherProjectById" parameterType="Long">
+        delete from sys_teacher_project where id = #{id}
+    </delete>
+
+    <delete id="deleteSysTeacherProjectByIds" parameterType="String">
+        delete from sys_teacher_project where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

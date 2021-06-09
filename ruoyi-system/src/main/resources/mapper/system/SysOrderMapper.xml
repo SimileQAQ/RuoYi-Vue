@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysOrderMapper">
+    
+    <resultMap type="SysOrder" id="SysOrderResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="projectId"    column="project_id"    />
+        <result property="projectImport"    column="project_import"    />
+        <result property="itemCode"    column="item_code"    />
+        <result property="productName"    column="product_name"    />
+        <result property="technicalParams"    column="technical_params"    />
+        <result property="productPrice"    column="product_price"    />
+        <result property="projectNum"    column="project_num"    />
+        <result property="totalPrices"    column="total_prices"    />
+        <result property="relevantDepartment"    column="relevant_department"    />
+        <result property="status"    column="status"    />
+        <result property="username"    column="username"    />
+        <result property="userId"    column="user_id"    />
+        <result property="email"    column="email"    />
+        <result property="relevantAuditor"    column="relevant_auditor"    />
+        <result property="relevantStatu"    column="relevant_statu"    />
+        <result property="relevantMessage"    column="relevant_message"    />
+        <result property="financeAuditor"    column="finance_auditor"    />
+        <result property="financeStatu"    column="finance_statu"    />
+        <result property="financeMessage"    column="finance_message"    />
+        <result property="procurementAuditor"    column="procurement_auditor"    />
+        <result property="procurementStatu"    column="procurement_statu"    />
+        <result property="procurementMessage"    column="procurement_message"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectSysOrderVo">
+        select id, order_id, project_id, project_import, item_code, product_name, technical_params, product_price, project_num, total_prices, relevant_department, status, username, user_id, email, relevant_auditor, relevant_statu, relevant_message, finance_auditor, finance_statu, finance_message, procurement_auditor, procurement_statu, procurement_message, create_time, update_time from sys_order
+    </sql>
+
+    <select id="selectSysOrderList" parameterType="SysOrder" resultMap="SysOrderResult">
+        <include refid="selectSysOrderVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="projectId != null  and projectId != ''"> and project_id = #{projectId}</if>
+            <if test="projectImport != null  and projectImport != ''"> and project_import = #{projectImport}</if>
+            <if test="itemCode != null  and itemCode != ''"> and item_code = #{itemCode}</if>
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="technicalParams != null  and technicalParams != ''"> and technical_params = #{technicalParams}</if>
+            <if test="productPrice != null  and productPrice != ''"> and product_price = #{productPrice}</if>
+            <if test="projectNum != null  and projectNum != ''"> and project_num = #{projectNum}</if>
+            <if test="totalPrices != null  and totalPrices != ''"> and total_prices = #{totalPrices}</if>
+            <if test="relevantDepartment != null  and relevantDepartment != ''"> and relevant_department = #{relevantDepartment}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="relevantAuditor != null  and relevantAuditor != ''"> and relevant_auditor = #{relevantAuditor}</if>
+            <if test="relevantStatu != null  and relevantStatu != ''"> and relevant_statu = #{relevantStatu}</if>
+            <if test="relevantMessage != null  and relevantMessage != ''"> and relevant_message = #{relevantMessage}</if>
+            <if test="financeAuditor != null  and financeAuditor != ''"> and finance_auditor = #{financeAuditor}</if>
+            <if test="financeStatu != null  and financeStatu != ''"> and finance_statu = #{financeStatu}</if>
+            <if test="financeMessage != null  and financeMessage != ''"> and finance_message = #{financeMessage}</if>
+            <if test="procurementAuditor != null  and procurementAuditor != ''"> and procurement_auditor = #{procurementAuditor}</if>
+            <if test="procurementStatu != null  and procurementStatu != ''"> and procurement_statu = #{procurementStatu}</if>
+            <if test="procurementMessage != null  and procurementMessage != ''"> and procurement_message = #{procurementMessage}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysOrderById" parameterType="Long" resultMap="SysOrderResult">
+        <include refid="selectSysOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSysOrder" parameterType="SysOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="projectId != null and projectId != ''">project_id,</if>
+            <if test="projectImport != null and projectImport != ''">project_import,</if>
+            <if test="itemCode != null and itemCode != ''">item_code,</if>
+            <if test="productName != null and productName != ''">product_name,</if>
+            <if test="technicalParams != null and technicalParams != ''">technical_params,</if>
+            <if test="productPrice != null and productPrice != ''">product_price,</if>
+            <if test="projectNum != null and projectNum != ''">project_num,</if>
+            <if test="totalPrices != null">total_prices,</if>
+            <if test="relevantDepartment != null and relevantDepartment != ''">relevant_department,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="username != null">username,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="email != null">email,</if>
+            <if test="relevantAuditor != null">relevant_auditor,</if>
+            <if test="relevantStatu != null">relevant_statu,</if>
+            <if test="relevantMessage != null">relevant_message,</if>
+            <if test="financeAuditor != null">finance_auditor,</if>
+            <if test="financeStatu != null">finance_statu,</if>
+            <if test="financeMessage != null">finance_message,</if>
+            <if test="procurementAuditor != null">procurement_auditor,</if>
+            <if test="procurementStatu != null">procurement_statu,</if>
+            <if test="procurementMessage != null">procurement_message,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="projectId != null and projectId != ''">#{projectId},</if>
+            <if test="projectImport != null and projectImport != ''">#{projectImport},</if>
+            <if test="itemCode != null and itemCode != ''">#{itemCode},</if>
+            <if test="productName != null and productName != ''">#{productName},</if>
+            <if test="technicalParams != null and technicalParams != ''">#{technicalParams},</if>
+            <if test="productPrice != null and productPrice != ''">#{productPrice},</if>
+            <if test="projectNum != null and projectNum != ''">#{projectNum},</if>
+            <if test="totalPrices != null">#{totalPrices},</if>
+            <if test="relevantDepartment != null and relevantDepartment != ''">#{relevantDepartment},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="username != null">#{username},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="email != null">#{email},</if>
+            <if test="relevantAuditor != null">#{relevantAuditor},</if>
+            <if test="relevantStatu != null">#{relevantStatu},</if>
+            <if test="relevantMessage != null">#{relevantMessage},</if>
+            <if test="financeAuditor != null">#{financeAuditor},</if>
+            <if test="financeStatu != null">#{financeStatu},</if>
+            <if test="financeMessage != null">#{financeMessage},</if>
+            <if test="procurementAuditor != null">#{procurementAuditor},</if>
+            <if test="procurementStatu != null">#{procurementStatu},</if>
+            <if test="procurementMessage != null">#{procurementMessage},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysOrder" parameterType="SysOrder">
+        update sys_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="projectId != null and projectId != ''">project_id = #{projectId},</if>
+            <if test="projectImport != null and projectImport != ''">project_import = #{projectImport},</if>
+            <if test="itemCode != null and itemCode != ''">item_code = #{itemCode},</if>
+            <if test="productName != null and productName != ''">product_name = #{productName},</if>
+            <if test="technicalParams != null and technicalParams != ''">technical_params = #{technicalParams},</if>
+            <if test="productPrice != null and productPrice != ''">product_price = #{productPrice},</if>
+            <if test="projectNum != null and projectNum != ''">project_num = #{projectNum},</if>
+            <if test="totalPrices != null">total_prices = #{totalPrices},</if>
+            <if test="relevantDepartment != null and relevantDepartment != ''">relevant_department = #{relevantDepartment},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="relevantAuditor != null">relevant_auditor = #{relevantAuditor},</if>
+            <if test="relevantStatu != null">relevant_statu = #{relevantStatu},</if>
+            <if test="relevantMessage != null">relevant_message = #{relevantMessage},</if>
+            <if test="financeAuditor != null">finance_auditor = #{financeAuditor},</if>
+            <if test="financeStatu != null">finance_statu = #{financeStatu},</if>
+            <if test="financeMessage != null">finance_message = #{financeMessage},</if>
+            <if test="procurementAuditor != null">procurement_auditor = #{procurementAuditor},</if>
+            <if test="procurementStatu != null">procurement_statu = #{procurementStatu},</if>
+            <if test="procurementMessage != null">procurement_message = #{procurementMessage},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysOrderById" parameterType="Long">
+        delete from sys_order where id = #{id}
+    </delete>
+
+    <delete id="deleteSysOrderByIds" parameterType="String">
+        delete from sys_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
